@@ -22,6 +22,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".UpdatePassword"></activity>
+        <activity android:name=".UpdateProfile" />
+        <activity android:name=".UserProfile" />
+        <activity android:name=".PasswordActivity" />
+        <activity android:name=".RegistrationActivity" />
         <activity android:name=".MainActivity" />
         <activity
             android:name=".BottomNavigationActivity"
@@ -47,10 +52,7 @@
 
         <activity android:name=".FailedLoginActivity" />
         <activity android:name=".SuccessfulLoginActivity" />
-        <activity android:name=".HospitalPatientActivity" />
-        <!--
-             .MainActivity below
-        -->
+        <activity android:name=".HospitalPatientActivity" /> <!-- .MainActivity below -->
         <activity android:name=".InitialSplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

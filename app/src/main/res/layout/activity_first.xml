@@ -58,7 +58,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center"
-                    android:background="@color/colorBrightRed"
+                    android:background="@color/colorLightTeal"
                     android:orientation="vertical"
                     android:padding="16dp">
 
@@ -94,7 +94,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="vertical"
-                    android:background="@color/colorBrightRed"
+                    android:background="@color/colorLightTeal"
                     android:padding="16dp"
                     android:gravity="center" >
 
@@ -128,7 +128,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="vertical"
-                    android:background="@color/colorBrightRed"
+                    android:background="@color/colorLightTeal"
                     android:padding="16dp"
                     android:gravity="center" >
 
@@ -163,7 +163,7 @@
                     android:layout_height="match_parent"
                     android:orientation="vertical"
                     android:padding="16dp"
-                    android:background="@color/colorBrightRed"
+                    android:background="@color/colorLightTeal"
                     android:gravity="center" >
 
                     <ImageView

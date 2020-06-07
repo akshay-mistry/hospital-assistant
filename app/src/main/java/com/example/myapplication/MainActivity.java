@@ -1,70 +1,131 @@
 package com.example.myapplication;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Button;
+import android.widget.Toast;
 
-import androidx.annotation.RequiresApi;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-public class MainActivity extends AppCompatActivity {
+import com.example.myapplication.FirstActivity;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
-    private EditText Username;
-    private EditText Password;
-    private TextView Info;
-    private Button Login;
-    private int attemptsRemaining = 5;
+public class MainActivity extends AppCompatActivity
+{
+    private EditText name;
+    private EditText password;
+    private Button login;
+    private int counter = 5;
+    private TextView userRegistration;
+    private FirebaseAuth firebaseAuth;
+    private ProgressDialog progressDialog;
+    private TextView forgotPassword;
 
-    @RequiresApi(api = Build.VERSION_CODES.P)
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Username = (EditText)findViewById(R.id.etName);
-        Password = (EditText)findViewById(R.id.etPassword);
-        Info = (TextView)findViewById(R.id.tvInfo);
-        Login = (Button)findViewById(R.id.btnLogin);
+        name = (EditText)findViewById(R.id.etName);
+        password = (EditText)findViewById(R.id.etPassword);
+        login = (Button)findViewById(R.id.btnLogin);
+        userRegistration = (TextView)findViewById(R.id.tvRegister);
+        forgotPassword = (TextView)findViewById(R.id.tvForgotPassword);
 
-        Info.setText("Attempts Remaining: 5");
+        firebaseAuth = FirebaseAuth.getInstance();
+        progressDialog = new ProgressDialog(this);
 
-        Login.setOnClickListener(new View.OnClickListener() {
+        FirebaseUser user = firebaseAuth.getCurrentUser();
+
+        if(user != null)
+        {
+            finish();
+            startActivity(new Intent(MainActivity.this, FirstActivity.class));
+        }
+
+        login.setOnClickListener(new View.OnClickListener()
+        {
             @Override
-            public void onClick(View v) {
-                validate(Username.getText().toString(), Password.getText().toString());
+            public void onClick(View view)
+            {
+                validate(name.getText().toString(), password.getText().toString());
             }
         });
 
+        userRegistration.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                startActivity(new Intent(MainActivity.this, RegistrationActivity.class));
+            }
+        });
+
+        forgotPassword.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                startActivity(new Intent(MainActivity.this, PasswordActivity.class));
+            }
+        });
     }
 
-    public void validate (String username, String password) {
+    private void validate(String username, String password)
+    {
+        progressDialog.setMessage("Signing In");
+        progressDialog.show();
 
-        if (username.equals("abcd") && password.equals("1234"))
+        firebaseAuth.signInWithEmailAndPassword(username, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task)
+            {
+                if(task.isSuccessful())
+                {
+                    progressDialog.dismiss();
+                    //Toast.makeText(MainActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();
+                    checkEmailVerification();
+                }
+                else
+                {
+                    Toast.makeText(MainActivity.this, "Login Failed", Toast.LENGTH_SHORT).show();
+                    counter--;
+                    progressDialog.dismiss();
+
+                    if(counter == 0)
+                    {
+                        login.setEnabled(false);
+                        Toast.makeText(MainActivity.this, "Login Attempts Exceeded", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+        });
+    }
+
+    private void checkEmailVerification()
+    {
+        FirebaseUser firebaseUser = firebaseAuth.getInstance().getCurrentUser();
+        Boolean emailflag = firebaseUser.isEmailVerified();
+
+        if(emailflag)
         {
-            Intent success = new Intent(MainActivity.this, SuccessfulLoginActivity.class); //move from one activity to another
-            startActivity(success); //normal screen
+            finish();
+            startActivity(new Intent(MainActivity.this, FirstActivity.class));
         }
         else
         {
-            attemptsRemaining--;
-
-            Info.setText("Attempts Remaining: " + attemptsRemaining);
-
-            if (attemptsRemaining == 0)
-            {
-                Login.setEnabled(false);
-                Intent fail = new Intent(MainActivity.this, FailedLoginActivity.class);
-                startActivity(fail);
-            }
+            Toast.makeText(this, "Please Verify Your Email", Toast.LENGTH_SHORT).show();
+            firebaseAuth.signOut();
         }
-
-
     }
-
 }

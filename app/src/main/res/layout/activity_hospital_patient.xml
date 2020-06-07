@@ -6,19 +6,21 @@
     android:layout_height="match_parent"
     android:background="@color/colorDarkTeal"
     tools:context=".MainActivity">
+
     <TextView
+        android:id="@+id/txtTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
-        android:layout_marginLeft="30dp"
-        android:id="@+id/txtTitle"
         android:text="Hospital Assistant"
+        android:textColor="@color/colorBrightRed"
         android:textSize="30dp"
-        android:textColor="@color/colorBrightRed" />
+        tools:layout_editor_absoluteX="32dp"
+        tools:layout_editor_absoluteY="73dp" />
+
     <ImageView
         android:id="@+id/imageView2"
-        android:layout_width="128dp"
-        android:layout_height="129dp"
+        android:layout_width="105dp"
+        android:layout_height="101dp"
         android:layout_alignParentRight="true"
         android:layout_marginStart="256dp"
         android:layout_marginLeft="256dp"
@@ -29,8 +31,10 @@
         android:src="@mipmap/ic_blue_logo"
         app:layout_constraintBottom_toTopOf="@+id/bigButton"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0" />
 
     <Button
         android:id="@+id/bigButton2"
@@ -44,11 +48,11 @@
         android:layout_marginBottom="248dp"
         android:background="@color/colorBrightRed"
         android:text="Hospital"
-        android:textSize="30dp"
         android:textColor="@color/colorBlack"
+        android:textSize="30dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.307"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/bigButton" />
 
@@ -64,11 +68,11 @@
         android:layout_marginBottom="31dp"
         android:background="@color/colorBrightRed"
         android:text="Patient"
-        android:textSize="30dp"
         android:textColor="@color/colorBlack"
+        android:textSize="30dp"
         app:layout_constraintBottom_toTopOf="@+id/bigButton2"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
